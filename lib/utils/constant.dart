@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-const String emptyEmailErrMsg = 'Please enter your email address';
-const String emptyPasswordErrMsg = 'Please enter your password';
+const String emptyEmailErrMsg = 'Enter your email Id';
+const String emptyPasswordErrMsg = 'Enter your password';
 const String emptyErrMsg = "This field can't be left blank";
 
 // Show login warning

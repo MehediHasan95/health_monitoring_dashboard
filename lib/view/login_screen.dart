@@ -64,7 +64,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
-                      height: 50,
+                      height: 20,
+                    ),
+                    Image.asset('assets/admin.png', height: 120),
+                    const SizedBox(
+                      height: 20,
                     ),
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,

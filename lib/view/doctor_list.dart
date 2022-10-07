@@ -44,15 +44,28 @@ class _DoctorListState extends State<DoctorList> {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      child: ListTile(
-                        leading: Text("${doctor.uniqueId}"),
-                        title: Text("${doctor.name}"),
-                        subtitle: Text("${doctor.email}"),
-                        trailing: IconButton(
-                            onPressed: () {
-                              _deleteMethod(doctor.uid);
-                            },
-                            icon: const Icon(Icons.delete)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ListTile(
+                          isThreeLine: true,
+                          title: Text("${doctor.name} (${doctor.uniqueId})",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("${doctor.email}"),
+                              Text("${doctor.specialist}"),
+                              Text("${doctor.hospital}"),
+                            ],
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {
+                                _deleteMethod(doctor.uid);
+                              },
+                              icon: const Icon(Icons.delete,
+                                  color: Colors.redAccent)),
+                        ),
                       ),
                     ),
                   );
