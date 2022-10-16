@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:health_monitoring_dashboard/model/hospital_model.dart';
 import 'package:health_monitoring_dashboard/model/specialist_model.dart';
-import 'package:health_monitoring_dashboard/model/verified_model.dart';
 
 class DatabaseHelper {
   static final FirebaseFirestore db = FirebaseFirestore.instance;
@@ -62,15 +61,6 @@ class DatabaseHelper {
     final docID = db.collection(_hospitalCollection).doc();
     hospitalModel.id = docID.id;
     writeBatch.set(docID, hospitalModel.toMap());
-    return writeBatch.commit();
-  }
-
-  // add verified
-  static Future<void> addVerified(VerifiedModel verifiedModel) {
-    final writeBatch = db.batch();
-    final docID = db.collection(_verifiedCollection).doc();
-    verifiedModel.id = docID.id;
-    writeBatch.set(docID, verifiedModel.toMap());
     return writeBatch.commit();
   }
 }

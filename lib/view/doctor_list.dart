@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:health_monitoring_dashboard/database/database_helper.dart';
 import 'package:health_monitoring_dashboard/provider/common_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,28 +43,21 @@ class _DoctorListState extends State<DoctorList> {
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: ListTile(
-                          isThreeLine: true,
-                          title: Text("${doctor.name} (${doctor.uniqueId})",
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("${doctor.email}"),
-                              Text("${doctor.specialist}"),
-                              Text("${doctor.hospital}"),
-                            ],
-                          ),
-                          trailing: IconButton(
-                              onPressed: () {
-                                _deleteMethod(doctor.uid);
-                              },
-                              icon: const Icon(Icons.delete,
-                                  color: Colors.redAccent)),
-                        ),
+                      child: ListTile(
+                        leading: doctor.gender == 'Male'
+                            ? Image.asset('assets/man-doctor.png', height: 50)
+                            : Image.asset('assets/woman-doctor.png',
+                                height: 50),
+                        title: Text("${doctor.name} (${doctor.uniqueId})",
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        subtitle: Text("${doctor.email}"),
+                        // trailing: IconButton(
+                        //     onPressed: () {
+                        //       _deleteMethod(doctor.uid);
+                        //     },
+                        //     icon: const Icon(Icons.delete,
+                        //         color: Colors.redAccent)),
                       ),
                     ),
                   );
@@ -78,7 +70,7 @@ class _DoctorListState extends State<DoctorList> {
     );
   }
 
-  void _deleteMethod(String? uid) {
-    DatabaseHelper.db.collection("doctor").doc(uid).delete();
-  }
+  // void _deleteMethod(String? uid) {
+  //   DatabaseHelper.db.collection("doctor").doc(uid).delete();
+  // }
 }

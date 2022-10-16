@@ -60,7 +60,8 @@ class _SpecialistState extends State<Specialist> {
                             onPressed: () {
                               _deleteMethod(specialist.id);
                             },
-                            icon: const Icon(Icons.delete)),
+                            icon: const Icon(Icons.delete,
+                                color: Colors.redAccent)),
                       ),
                     ),
                   );

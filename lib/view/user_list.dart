@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:health_monitoring_dashboard/database/database_helper.dart';
 import 'package:health_monitoring_dashboard/provider/common_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -45,13 +44,17 @@ class _UserListState extends State<UserList> {
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
                       child: ListTile(
+                        leading: user.gender == 'Male'
+                            ? Image.asset('assets/man.png', height: 50)
+                            : Image.asset('assets/woman.png', height: 50),
                         title: Text("${user.username}"),
                         subtitle: Text("${user.email}"),
-                        trailing: IconButton(
-                            onPressed: () {
-                              _deleteMethod(user.uid);
-                            },
-                            icon: const Icon(Icons.delete)),
+                        // trailing: IconButton(
+                        //     onPressed: () {
+                        //       _deleteMethod(user.uid);
+                        //     },
+                        //     icon: const Icon(Icons.delete,
+                        //         color: Colors.redAccent)),
                       ),
                     ),
                   );
@@ -64,7 +67,7 @@ class _UserListState extends State<UserList> {
     );
   }
 
-  void _deleteMethod(String? uid) {
-    DatabaseHelper.db.collection("userProfileInfo").doc(uid).delete();
-  }
+  // void _deleteMethod(String? uid) {
+  //   DatabaseHelper.db.collection("userProfileInfo").doc(uid).delete();
+  // }
 }

@@ -60,7 +60,8 @@ class _HospitalListState extends State<HospitalList> {
                             onPressed: () {
                               _deleteMethod(hospital.id);
                             },
-                            icon: const Icon(Icons.delete)),
+                            icon: const Icon(Icons.delete,
+                                color: Colors.redAccent)),
                       ),
                     ),
                   );

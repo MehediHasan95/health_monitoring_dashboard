@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:health_monitoring_dashboard/auth/auth_service.dart';
-import 'package:health_monitoring_dashboard/provider/admin_provider.dart';
+import 'package:health_monitoring_dashboard/database/database_helper.dart';
 import 'package:health_monitoring_dashboard/provider/common_provider.dart';
-import 'package:health_monitoring_dashboard/view/admin_screen.dart';
 import 'package:health_monitoring_dashboard/view/doctor_list.dart';
 import 'package:health_monitoring_dashboard/view/hospital_list.dart';
 import 'package:health_monitoring_dashboard/view/login_screen.dart';
 import 'package:health_monitoring_dashboard/view/specialist.dart';
 import 'package:health_monitoring_dashboard/view/user_list.dart';
-import 'package:health_monitoring_dashboard/view/verified_list.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
@@ -21,19 +19,17 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final uid = AuthService.currentUser?.uid;
   late CommonProvider _commonProvider;
-  late AdminProvider _adminProvider;
 
   @override
   void didChangeDependencies() {
-    _adminProvider = Provider.of<AdminProvider>(context, listen: false);
-    _adminProvider.getAdmin();
     _commonProvider = Provider.of<CommonProvider>(context, listen: false);
     _commonProvider.getAllDoctor();
     _commonProvider.getAllUser();
     _commonProvider.getAllSpecialist();
     _commonProvider.getAllHospital();
-    _commonProvider.getAllVerified();
+    getAdmin();
     super.didChangeDependencies();
   }
 
@@ -43,9 +39,9 @@ class _DashboardState extends State<Dashboard> {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
         title: const Text("Admin Panel"),
-        actions: [
-          IconButton(onPressed: _logOut, icon: const Icon(Icons.logout))
-        ],
+        // actions: [
+        //   IconButton(onPressed: _logOut, icon: const Icon(Icons.logout))
+        // ],
       ),
       body: Container(
         color: Colors.deepPurple.shade100,
@@ -55,23 +51,6 @@ class _DashboardState extends State<Dashboard> {
           crossAxisSpacing: 4,
           mainAxisSpacing: 4,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, AdminScreen.routeNames);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    FaIcon(FontAwesomeIcons.userShield),
-                    SizedBox(height: 5),
-                    Text("ADMIN")
-                  ],
-                )),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, DoctorList.routeNames);
@@ -140,44 +119,34 @@ class _DashboardState extends State<Dashboard> {
                     Text("HOSPITAL")
                   ],
                 )),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, VerifiedList.routeNames);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    FaIcon(FontAwesomeIcons.idBadge),
-                    SizedBox(height: 5),
-                    Text("VERIFIED")
-                  ],
-                )),
           ],
         ),
       ),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     children: [
-      //       DrawerHeader(
-      //           decoration: const BoxDecoration(
-      //             color: Colors.deepPurple,
-      //           ),
-      //           child: Column(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //           )),
-      //       ListTile(
-      //         onTap: _logOut,
-      //         leading: const Icon(Icons.logout, color: Colors.redAccent),
-      //         title: const Text('Sign Out'),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Colors.deepPurple,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name!,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    Text(email!, style: const TextStyle(color: Colors.white)),
+                  ],
+                )),
+            ListTile(
+              onTap: _logOut,
+              leading: const Icon(Icons.logout, color: Colors.redAccent),
+              title: const Text('Sign Out'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -186,5 +155,23 @@ class _DashboardState extends State<Dashboard> {
     AuthService.signOut().whenComplete(() => Navigator.of(context)
         .pushNamedAndRemoveUntil(
             LoginScreen.routeNames, (Route<dynamic> route) => false));
+  }
+
+  String? name = '';
+  String? email = '';
+  String? gender = '';
+  Future getAdmin() async {
+    await DatabaseHelper.db.collection('admin').doc(uid).get().then(
+      (querySnapshot) {
+        name = querySnapshot.data()!['name'];
+        email = querySnapshot.data()!['email'];
+        gender = querySnapshot.data()!['gender'];
+      },
+    );
+    setState(() {
+      name;
+      email;
+      gender;
+    });
   }
 }

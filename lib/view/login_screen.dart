@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   shrinkWrap: true,
                   children: [
                     Text(
-                      'SIGN IN',
+                      'ADMIN SIGN IN',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -59,14 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 5,
                     ),
                     Text(
-                      'Admin login only',
+                      'This app only for admin',
                       style: TextStyle(color: Colors.grey.shade800),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Image.asset('assets/admin.png', height: 120),
                     const SizedBox(
                       height: 20,
                     ),
