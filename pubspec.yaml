@@ -44,6 +44,12 @@ dependencies:
   lottie: ^1.4.1
   google_fonts: ^3.0.1
   font_awesome_flutter: ^10.1.0
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/dashboard.png"
 
 dev_dependencies:
   flutter_test:
