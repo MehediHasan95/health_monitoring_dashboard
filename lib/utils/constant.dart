@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_dashboard/database/database_helper.dart';
 import 'package:lottie/lottie.dart';
 
 const String emptyEmailErrMsg = 'Enter your email Id';
@@ -24,3 +25,29 @@ Future<bool?> showWarningMessage(BuildContext context, String errMsg) async =>
                 ),
               ],
             ));
+
+Future<bool?> deleteDialog(BuildContext context, String errMsg, String uid,
+        String collection) async =>
+    showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+            title: Text(
+              errMsg,
+              style: TextStyle(color: Colors.grey.shade800),
+              textAlign: TextAlign.center,
+            ),
+            actions: [
+              MaterialButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text("NO", style: TextStyle(color: Colors.green)),
+              ),
+              MaterialButton(
+                onPressed: () => {
+                  Navigator.pop(context, true),
+                  DatabaseHelper.db.collection(collection).doc(uid).delete()
+                },
+                child: const Text("YES",
+                    style: TextStyle(color: Colors.redAccent)),
+              ),
+            ],
+            actionsAlignment: MainAxisAlignment.center));

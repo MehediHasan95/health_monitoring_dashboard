@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_dashboard/provider/common_provider.dart';
+import 'package:health_monitoring_dashboard/utils/constant.dart';
 import 'package:provider/provider.dart';
 
 class DoctorList extends StatefulWidget {
@@ -52,12 +53,12 @@ class _DoctorListState extends State<DoctorList> {
                             style:
                                 const TextStyle(fontWeight: FontWeight.bold)),
                         subtitle: Text("${doctor.email}"),
-                        // trailing: IconButton(
-                        //     onPressed: () {
-                        //       _deleteMethod(doctor.uid);
-                        //     },
-                        //     icon: const Icon(Icons.delete,
-                        //         color: Colors.redAccent)),
+                        trailing: IconButton(
+                            onPressed: () {
+                              _deleteMethod(doctor.uid);
+                            },
+                            icon: const Icon(Icons.delete,
+                                color: Colors.redAccent)),
                       ),
                     ),
                   );
@@ -70,7 +71,8 @@ class _DoctorListState extends State<DoctorList> {
     );
   }
 
-  // void _deleteMethod(String? uid) {
-  //   DatabaseHelper.db.collection("doctor").doc(uid).delete();
-  // }
+  void _deleteMethod(String? uid) {
+    deleteDialog(context, "Do you want to delete this doctor's account?", uid!,
+        "doctor");
+  }
 }

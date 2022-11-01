@@ -142,6 +142,7 @@ class _SpecialistState extends State<Specialist> {
   }
 
   void _deleteMethod(String? uid) {
-    DatabaseHelper.db.collection("Specialist").doc(uid).delete();
+    deleteDialog(
+        context, "Do you want to delete this specialist", uid!, "Specialist");
   }
 }

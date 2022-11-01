@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_monitoring_dashboard/provider/common_provider.dart';
+import 'package:health_monitoring_dashboard/utils/constant.dart';
 import 'package:provider/provider.dart';
 
 class UserList extends StatefulWidget {
@@ -49,12 +50,12 @@ class _UserListState extends State<UserList> {
                             : Image.asset('assets/woman.png', height: 50),
                         title: Text("${user.username}"),
                         subtitle: Text("${user.email}"),
-                        // trailing: IconButton(
-                        //     onPressed: () {
-                        //       _deleteMethod(user.uid);
-                        //     },
-                        //     icon: const Icon(Icons.delete,
-                        //         color: Colors.redAccent)),
+                        trailing: IconButton(
+                            onPressed: () {
+                              _deleteMethod(user.uid);
+                            },
+                            icon: const Icon(Icons.delete,
+                                color: Colors.redAccent)),
                       ),
                     ),
                   );
@@ -67,7 +68,8 @@ class _UserListState extends State<UserList> {
     );
   }
 
-  // void _deleteMethod(String? uid) {
-  //   DatabaseHelper.db.collection("userProfileInfo").doc(uid).delete();
-  // }
+  void _deleteMethod(String? uid) {
+    deleteDialog(context, "Do you want to delete this user's account?", uid!,
+        "userProfileInfo");
+  }
 }

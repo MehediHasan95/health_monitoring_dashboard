@@ -142,6 +142,7 @@ class _HospitalListState extends State<HospitalList> {
   }
 
   void _deleteMethod(String? uid) {
-    DatabaseHelper.db.collection("Hospital").doc(uid).delete();
+    deleteDialog(
+        context, "Do you want to delete this hospital", uid!, "Hospital");
   }
 }
