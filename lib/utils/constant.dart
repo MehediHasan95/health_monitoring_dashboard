@@ -31,7 +31,8 @@ Future<bool?> deleteDialog(BuildContext context, String errMsg, String uid,
     showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-            title: Text(
+            title: LottieBuilder.asset('assets/delete.json', height: 120),
+            content: Text(
               errMsg,
               style: TextStyle(color: Colors.grey.shade800),
               textAlign: TextAlign.center,
