@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_monitoring_dashboard/model/user_model.dart';
 import 'package:health_monitoring_dashboard/provider/common_provider.dart';
 import 'package:health_monitoring_dashboard/utils/constant.dart';
 import 'package:provider/provider.dart';
@@ -56,6 +58,9 @@ class _UserListState extends State<UserList> {
                             },
                             icon: const Icon(Icons.delete,
                                 color: Colors.redAccent)),
+                        onLongPress: () {
+                          _getUserProfile(user);
+                        },
                       ),
                     ),
                   );
@@ -71,5 +76,41 @@ class _UserListState extends State<UserList> {
   void _deleteMethod(String? uid) {
     deleteDialog(context, "Do you want to delete this user's account?", uid!,
         "userProfileInfo");
+  }
+
+  void _getUserProfile(UserModel user) {
+    showDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+              title: Column(
+                children: [
+                  user.gender == "Male"
+                      ? Image.asset('assets/man.png', height: 150)
+                      : Image.asset('assets/woman.png', height: 150),
+                  const SizedBox(height: 10),
+                  Text("${user.username}",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.purple.shade900)),
+                ],
+              ),
+              content: Column(
+                children: [
+                  Text("${user.email}",
+                      style: TextStyle(color: Colors.grey.shade900)),
+                  Text("${user.gender}",
+                      style: TextStyle(color: Colors.grey.shade900)),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  child: const Text('CLOSE',
+                      style: TextStyle(color: Colors.redAccent)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ));
   }
 }
